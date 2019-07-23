@@ -1,7 +1,9 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RestWithAspNETUdemy.Model
 {
+    [Table("persons")]
     public class Person
     {
         public long Id { get; set; }

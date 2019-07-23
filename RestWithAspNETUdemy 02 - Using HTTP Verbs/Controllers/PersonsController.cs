@@ -44,7 +44,7 @@ namespace RestWithAspNETUdemy.Controllers
         public IActionResult Update([FromBody] Person person)
         {
             if (person == null) return BadRequest();
-            return new ObjectResult(_personService.Create(person));
+            return new ObjectResult(_personService.Update(person));
         }
 
         // DELETE api/values/5
