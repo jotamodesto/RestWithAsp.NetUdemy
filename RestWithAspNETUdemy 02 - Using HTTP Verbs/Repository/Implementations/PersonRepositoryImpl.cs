@@ -1,17 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using RestWithAspNETUdemy.Model;
 using RestWithAspNETUdemy.Model.Context;
 
-namespace RestWithAspNETUdemy.Services.Implementations
+namespace RestWithAspNETUdemy.Repository.Implementations
 {
-    public class PersonServiceImpl : IPersonService
+    public class PersonRepositoryImpl : IPersonRepository
     {
         private MySQLContext _context;
 
-        public PersonServiceImpl(MySQLContext context)
+        public PersonRepositoryImpl(MySQLContext context)
         {
             _context = context;
         }
@@ -78,7 +77,7 @@ namespace RestWithAspNETUdemy.Services.Implementations
             return person;
         }
 
-        private bool Exists(long id)
+        public bool Exists(long id)
         {
             return _context.Persons.Any(p => p.Id == id);
         }

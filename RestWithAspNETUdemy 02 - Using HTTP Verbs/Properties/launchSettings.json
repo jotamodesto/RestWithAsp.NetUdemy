@@ -1,18 +1,9 @@
-{
-  "$schema": "http://json.schemastore.org/launchsettings.json",
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:48432",
-      "sslPort": 44387
-    }
-  },
+﻿{
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/persons",
+      "launchUrl": "api/persons/v1",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,7 +11,7 @@
     "RestWithAspNETUdemy": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/persons",
+      "launchUrl": "api/persons/v1",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
