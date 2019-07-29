@@ -3,12 +3,14 @@ using RestWithAspNETUdemy.Business;
 using RestWithAspNETUdemy.Data.VO;
 using Tapioca.HATEOAS;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RestWithAspNETUdemy.Controllers
 {
     [Route("api/[controller]/v{version:apiVersion}")]
     [ApiVersion("1")]
     [ApiController]
+    [Authorize("Bearer")]
     public class PersonsController : ControllerBase
     {
         private IPersonBusiness _personBusiness;

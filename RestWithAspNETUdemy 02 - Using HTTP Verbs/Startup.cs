@@ -22,6 +22,9 @@ using Tapioca.HATEOAS;
 using RestWithAspNETUdemy.Hypermedia;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.AspNetCore.Rewrite;
+using RestWithAspNETUdemy.Security.Configuration;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RestWithAspNETUdemy
 {
@@ -63,6 +66,39 @@ namespace RestWithAspNETUdemy
                 }
             }
 
+            var signingConfiguration = new SignInConfiguration();
+            services.AddSingleton(signingConfiguration);
+
+            var tokenConfiguration = new TokenConfiguration();
+            new ConfigureFromConfigurationOptions<TokenConfiguration>(_configuration.GetSection("TokenConfiguration"))
+            .Configure(tokenConfiguration);
+            services.AddSingleton(tokenConfiguration);
+
+            services.AddAuthentication(authOptions =>
+            {
+                authOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                authOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(bearerOptions =>
+            {
+                var paramValidation = bearerOptions.TokenValidationParameters;
+                paramValidation.IssuerSigningKey = signingConfiguration.Key;
+                paramValidation.ValidAudience = tokenConfiguration.Audience;
+                paramValidation.ValidIssuer = tokenConfiguration.Issuer;
+
+                paramValidation.ValidateIssuerSigningKey = true;
+                paramValidation.ValidateLifetime = true;
+                paramValidation.ClockSkew = TimeSpan.Zero;
+            });
+
+            services.AddAuthorization(auth =>
+            {
+                auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                    .RequireAuthenticatedUser().Build()
+                );
+            });
+
+
             services.AddMvc(options =>
             {
                 options.RespectBrowserAcceptHeader = true;
@@ -86,8 +122,9 @@ namespace RestWithAspNETUdemy
 
             // Dependencies
             services.AddScoped<IPersonBusiness, PersonBusinessImpl>();
-            services.AddScoped<IPersonRepository, PersonRepositoryImpl>();
+            services.AddScoped<IUserRepository, UserRepositoryImpl>();
             services.AddScoped<IBookBusiness, BookBusinessImpl>();
+            services.AddScoped<ILoginBusiness, LoginBusinessImpl>();
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         }
