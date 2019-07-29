@@ -20,6 +20,8 @@ using RestWithAspNETUdemy.Repository.Generic;
 using Microsoft.Net.Http.Headers;
 using Tapioca.HATEOAS;
 using RestWithAspNETUdemy.Hypermedia;
+using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace RestWithAspNETUdemy
 {
@@ -73,6 +75,11 @@ namespace RestWithAspNETUdemy
 
             services.AddApiVersioning();
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "RESTful API with ASP.NET Core", Version = "v1" });
+            });
+
             var filterOptions = new HyperMediaFilterOptions();
             filterOptions.ObjectContentResponseEnricherList.Add(new PersonEnricher());
             services.AddSingleton(filterOptions);
@@ -99,6 +106,16 @@ namespace RestWithAspNETUdemy
             }
 
             app.UseHttpsRedirection();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+
+            var option = new RewriteOptions();
+            option.AddRedirect("^$", "swagger");
+            app.UseRewriter(option);
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(name: "DefaultApi", template: "{controller=Values}/{id?}");

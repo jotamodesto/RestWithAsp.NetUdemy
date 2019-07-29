@@ -2,6 +2,7 @@
 using RestWithAspNETUdemy.Business;
 using RestWithAspNETUdemy.Data.VO;
 using Tapioca.HATEOAS;
+using System.Collections.Generic;
 
 namespace RestWithAspNETUdemy.Controllers
 {
@@ -21,11 +22,19 @@ namespace RestWithAspNETUdemy.Controllers
         // GET api/values
         [HttpGet]
         [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType(typeof(List<PersonVO>), 200)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Get() => Ok(_personBusiness.FindAll());
 
         // GET api/values/5
         [HttpGet("{id}")]
         [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType(typeof(PersonVO), 200)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Get(long id)
         {
             var person = _personBusiness.FindById(id);
@@ -36,6 +45,9 @@ namespace RestWithAspNETUdemy.Controllers
         // POST api/values
         [HttpPost]
         [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType(typeof(PersonVO), 201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Post([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
@@ -45,6 +57,9 @@ namespace RestWithAspNETUdemy.Controllers
         // PUT api/values/5
         [HttpPut]
         [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType(typeof(PersonVO), 202)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Update([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
@@ -56,6 +71,9 @@ namespace RestWithAspNETUdemy.Controllers
         // DELETE api/values/5
         [HttpDelete("{id}")]
         [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Delete(long id)
         {
             _personBusiness.Delete(id);
