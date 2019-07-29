@@ -18,6 +18,8 @@ using RestWithAspNETUdemy.Repository.Implementations;
 using RestWithAspNETUdemy.Repository;
 using RestWithAspNETUdemy.Repository.Generic;
 using Microsoft.Net.Http.Headers;
+using Tapioca.HATEOAS;
+using RestWithAspNETUdemy.Hypermedia;
 
 namespace RestWithAspNETUdemy
 {
@@ -64,11 +66,16 @@ namespace RestWithAspNETUdemy
                 options.RespectBrowserAcceptHeader = true;
                 options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("text/xml"));
                 options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
+                options.EnableEndpointRouting = false;
             })
             .AddXmlSerializerFormatters()
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddApiVersioning();
+
+            var filterOptions = new HyperMediaFilterOptions();
+            filterOptions.ObjectContentResponseEnricherList.Add(new PersonEnricher());
+            services.AddSingleton(filterOptions);
 
             // Dependencies
             services.AddScoped<IPersonBusiness, PersonBusinessImpl>();
@@ -92,7 +99,10 @@ namespace RestWithAspNETUdemy
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(name: "DefaultApi", template: "{controller=Values}/{id?}");
+            });
         }
     }
 }
