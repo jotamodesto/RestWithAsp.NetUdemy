@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using RestWithAspNETUdemy.Model;
-using RestWithAspNETUdemy.Repository;
+using RestWithAspNETUdemy.Repository.Generic;
 
 namespace RestWithAspNETUdemy.Business.Implementations
 {
     public class PersonBusinessImpl : IPersonBusiness
     {
-        private IPersonRepository _repository;
+        private IRepository<Person> _repository;
 
-        public PersonBusinessImpl(IPersonRepository repository) => _repository = repository;
+        public PersonBusinessImpl(IRepository<Person> repository) => _repository = repository;
 
         public Person Create(Person person) => _repository.Create(person);
 
