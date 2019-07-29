@@ -17,6 +17,7 @@ using RestWithAspNETUdemy.Business.Implementations;
 using RestWithAspNETUdemy.Repository.Implementations;
 using RestWithAspNETUdemy.Repository;
 using RestWithAspNETUdemy.Repository.Generic;
+using Microsoft.Net.Http.Headers;
 
 namespace RestWithAspNETUdemy
 {
@@ -58,7 +59,14 @@ namespace RestWithAspNETUdemy
                 }
             }
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(options =>
+            {
+                options.RespectBrowserAcceptHeader = true;
+                options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("text/xml"));
+                options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
+            })
+            .AddXmlSerializerFormatters()
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddApiVersioning();
 
