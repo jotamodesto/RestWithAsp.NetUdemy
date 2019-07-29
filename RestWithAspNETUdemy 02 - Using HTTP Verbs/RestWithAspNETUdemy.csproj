@@ -7,10 +7,6 @@
 
   <ItemGroup>
     <PackageReference Include="Evolve" Version="2.2.0" />
-    <PackageReference Include="Evolve.MSBuild.Windows.x64" Version="2.2.0">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="MySql.Data" Version="8.0.17" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
@@ -21,11 +17,11 @@
     <Folder Include="Repository\" />
   </ItemGroup>
 
-  <!-- <ItemGroup>
+  <ItemGroup>
     <Content Include="db\migrations\**\*.sql">
       <CopyToOutputDirecotry>PreserveNewest</CopyToOutputDirecotry>
     </Content>
-  </ItemGroup> -->
+  </ItemGroup>
 
   <Target Name="ChangeAliasesOfStrongNameAssemblies" BeforeTargets="FindReferenceAssembliesForReferences;ResolveReferences">
     <ItemGroup>
