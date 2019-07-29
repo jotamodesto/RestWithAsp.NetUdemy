@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestWithAspNETUdemy.Model;
 using RestWithAspNETUdemy.Business;
+using RestWithAspNETUdemy.Data.VO;
 
 namespace RestWithAspNETUdemy.Controllers
 {
@@ -11,8 +11,10 @@ namespace RestWithAspNETUdemy.Controllers
     {
         private IPersonBusiness _personBusiness;
 
-        public PersonsController(IPersonBusiness personBusiness) =>
+        public PersonsController(IPersonBusiness personBusiness)
+        {
             _personBusiness = personBusiness;
+        }
 
 
         // GET api/values
@@ -30,7 +32,7 @@ namespace RestWithAspNETUdemy.Controllers
 
         // POST api/values
         [HttpPost]
-        public IActionResult Post([FromBody] Person person)
+        public IActionResult Post([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
             return new ObjectResult(_personBusiness.Create(person));
@@ -38,7 +40,7 @@ namespace RestWithAspNETUdemy.Controllers
 
         // PUT api/values/5
         [HttpPut]
-        public IActionResult Update([FromBody] Person person)
+        public IActionResult Update([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
             var updatedPerson = _personBusiness.Update(person);
