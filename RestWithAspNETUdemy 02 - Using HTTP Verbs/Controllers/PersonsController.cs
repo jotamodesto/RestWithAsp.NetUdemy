@@ -44,6 +44,19 @@ namespace RestWithAspNETUdemy.Controllers
             return Ok(person);
         }
 
+        [HttpGet("find-by-name")]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType(typeof(List<PersonVO>), 200)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        public IActionResult GetByName([FromQuery] string firstName, [FromQuery] string lastName)
+        {
+            var persons = _personBusiness.FindByName(firstName, lastName);
+            if (persons == null) return NotFound();
+            return Ok(persons);
+        }
+
         // POST api/values
         [HttpPost]
         [TypeFilter(typeof(HyperMediaFilter))]

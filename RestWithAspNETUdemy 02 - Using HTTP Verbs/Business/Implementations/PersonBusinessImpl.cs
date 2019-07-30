@@ -1,17 +1,16 @@
 using System.Collections.Generic;
 using RestWithAspNETUdemy.Data.Converters;
 using RestWithAspNETUdemy.Data.VO;
-using RestWithAspNETUdemy.Model;
-using RestWithAspNETUdemy.Repository.Generic;
+using RestWithAspNETUdemy.Repository;
 
 namespace RestWithAspNETUdemy.Business.Implementations
 {
     public class PersonBusinessImpl : IPersonBusiness
     {
-        private IRepository<Person> _repository;
+        private IPersonRepository _repository;
         private readonly PersonConverter _converter;
 
-        public PersonBusinessImpl(IRepository<Person> repository)
+        public PersonBusinessImpl(IPersonRepository repository)
         {
             _repository = repository;
             _converter = new PersonConverter();
@@ -28,6 +27,16 @@ namespace RestWithAspNETUdemy.Business.Implementations
 
         public List<PersonVO> FindAll() => _converter.ParseList(_repository.FindAll());
 
+        public List<PersonVO> FindByName(string firstName, string lastName)
+        {
+            if (string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(lastName))
+                return FindAll();
+            else
+            {
+                return _converter.ParseList(_repository.FindByName(firstName, lastName));
+            }
+        }
+
         public PersonVO FindById(long id) => _converter.Parse(_repository.FindById(id));
 
         public PersonVO Update(PersonVO person)
@@ -36,5 +45,7 @@ namespace RestWithAspNETUdemy.Business.Implementations
             personEntity = _repository.Update(personEntity);
             return _converter.Parse(personEntity);
         }
+
+
     }
 }

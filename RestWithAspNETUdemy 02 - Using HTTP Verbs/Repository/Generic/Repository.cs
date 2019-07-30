@@ -9,8 +9,8 @@ namespace RestWithAspNETUdemy.Repository.Generic
 {
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
-        private MySQLContext _context;
-        private DbSet<T> _dataset;
+        protected readonly MySQLContext _context;
+        protected DbSet<T> _dataset;
 
         public Repository(MySQLContext context)
         {
