@@ -70,6 +70,19 @@ namespace RestWithAspNETUdemy.Controllers
             return new ObjectResult(updatedPerson);
         }
 
+        [HttpPatch]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType(typeof(PersonVO), 202)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        public IActionResult Patch([FromBody] PersonVO person)
+        {
+            if (person == null) return BadRequest();
+            var updatedPerson = _personBusiness.Update(person);
+            if (updatedPerson == null) return NoContent();
+            return new ObjectResult(updatedPerson);
+        }
+
         // DELETE api/values/5
         [HttpDelete("{id}")]
         [TypeFilter(typeof(HyperMediaFilter))]

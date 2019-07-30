@@ -1,12 +1,12 @@
 
 using System;
-using RestWithAspNETUdemy.Model;
 using RestWithAspNETUdemy.Repository;
 using RestWithAspNETUdemy.Security.Configuration;
 using System.Security.Principal;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
+using RestWithAspNETUdemy.Data.VO;
 
 namespace RestWithAspNETUdemy.Business.Implementations
 {
@@ -23,7 +23,7 @@ namespace RestWithAspNETUdemy.Business.Implementations
             _token = token;
         }
 
-        public object FindByLogin(User login)
+        public object FindByLogin(LoginVO login)
         {
             bool credentialValid = false;
             if (login != null && !string.IsNullOrWhiteSpace(login.Login))

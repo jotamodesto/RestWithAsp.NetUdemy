@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RestWithAspNETUdemy.Business;
 using RestWithAspNETUdemy.Data.VO;
-using RestWithAspNETUdemy.Model;
 
 namespace RestWithAspNETUdemy.Controllers
 {
@@ -22,7 +21,7 @@ namespace RestWithAspNETUdemy.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult Post([FromBody] User login)
+        public IActionResult Post([FromBody] LoginVO login)
         {
             if (login == null) return BadRequest();
             var userAuthenticated = _loginBusiness.FindByLogin(login);

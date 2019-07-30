@@ -1,10 +1,9 @@
-using System.Collections.Generic;
-using RestWithAspNETUdemy.Model;
+using RestWithAspNETUdemy.Data.VO;
 
 namespace RestWithAspNETUdemy.Business
 {
     public interface ILoginBusiness
     {
-        object FindByLogin(User login);
+        object FindByLogin(LoginVO login);
     }
 }
