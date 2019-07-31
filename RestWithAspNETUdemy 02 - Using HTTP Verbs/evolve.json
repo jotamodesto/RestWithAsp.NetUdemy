@@ -1,6 +1,6 @@
 {
   "Evolve.Database": "mysql",
-  "Evolve.ConnectionString": "Server=localhost;Port=3306;Database=rest_with_asp_net_udemy;Uid=root;Pwd=bwgadmin01;SslMode=none",
+  "Evolve.ConnectionString": "Server=localhost;Port=3306;Database=rest_with_asp_net_udemy;Uid=root;Pwd=admin123;SslMode=none",
   "Evolve.Locations": "db",
   "Evolve.Command": "migrate"
 }

@@ -57,6 +57,17 @@ namespace RestWithAspNETUdemy.Controllers
             return Ok(persons);
         }
 
+        [HttpGet("paged-search/{sortDirection}/{pageSize}/{page}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [ProducesResponseType(typeof(List<PersonVO>), 200)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        public IActionResult GetPagedSearch([FromQuery] string name, string sortDirection, int pageSize, int page)
+        {
+            return new OkObjectResult(_personBusiness.PagedSearch(name, sortDirection, pageSize, page));
+        }
+
         // POST api/values
         [HttpPost]
         [TypeFilter(typeof(HyperMediaFilter))]

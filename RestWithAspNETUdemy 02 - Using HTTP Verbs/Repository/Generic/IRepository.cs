@@ -11,6 +11,7 @@ namespace RestWithAspNETUdemy.Repository.Generic
         T Update(T item);
         void Delete(long id);
         bool Exists(long id);
-        List<T> PagedSearch();
+        List<T> PagedSearch(string query);
+        int GetCount(string query);
     }
 }

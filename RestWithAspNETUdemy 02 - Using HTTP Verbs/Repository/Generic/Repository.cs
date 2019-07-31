@@ -75,5 +75,27 @@ namespace RestWithAspNETUdemy.Repository.Generic
         public List<T> FindAll() => _dataset.ToList();
 
         public T FindById(long id) => _dataset.SingleOrDefault(i => i.Id == id);
+
+        public List<T> PagedSearch(string query)
+        {
+            return _dataset.FromSql<T>(query).ToList();
+        }
+
+        public int GetCount(string query)
+        {
+            var result = 0;
+            using (var connection = _context.Database.GetDbConnection())
+            {
+                connection.Open();
+
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = query;
+                    result = Convert.ToInt32(command.ExecuteScalar());
+                }
+            }
+
+            return result;
+        }
     }
 }

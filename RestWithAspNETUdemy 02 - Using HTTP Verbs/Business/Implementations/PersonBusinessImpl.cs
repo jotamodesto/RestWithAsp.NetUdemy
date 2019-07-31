@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using System.Text;
 using RestWithAspNETUdemy.Data.Converters;
 using RestWithAspNETUdemy.Data.VO;
 using RestWithAspNETUdemy.Repository;
+using Tapioca.HATEOAS.Utils;
 
 namespace RestWithAspNETUdemy.Business.Implementations
 {
@@ -46,6 +48,27 @@ namespace RestWithAspNETUdemy.Business.Implementations
             return _converter.Parse(personEntity);
         }
 
+        public PagedSearchDTO<PersonVO> PagedSearch(string name, string sortDirection, int pageSize, int page)
+        {
+            page = page > 0 ? page - 1 : 0;
+            var queryBuilder = new StringBuilder(@"select * from `persons` p where 1 = 1 ");
+            if (!string.IsNullOrWhiteSpace(name)) queryBuilder.Append($"and p.FirstName like '%{name}%' ");
+            queryBuilder.Append($"order by p.FirstName {sortDirection} limit {pageSize} offset {page}");
 
+            var countBuilder = new StringBuilder(@"select count(*) from `persons` p where 1 = 1 ");
+            if (!string.IsNullOrWhiteSpace(name)) countBuilder.Append($"and p.FirstName like '%{name}%' ");
+
+            var persons = _repository.PagedSearch(queryBuilder.ToString());
+            int totalResults = _repository.GetCount(countBuilder.ToString());
+
+            return new PagedSearchDTO<PersonVO>
+            {
+                CurrentPage = page + 1,
+                List = _converter.ParseList(persons),
+                PageSize = pageSize,
+                SortDirections = sortDirection,
+                TotalResults = totalResults
+            };
+        }
     }
 }
