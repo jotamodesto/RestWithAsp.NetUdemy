@@ -76,10 +76,7 @@ namespace RestWithAspNETUdemy.Repository.Generic
 
         public T FindById(long id) => _dataset.SingleOrDefault(i => i.Id == id);
 
-        public List<T> PagedSearch(string query)
-        {
-            return _dataset.FromSql<T>(query).ToList();
-        }
+        public List<T> PagedSearch(string query) => _dataset.FromSql<T>(query).ToList();
 
         public int GetCount(string query)
         {

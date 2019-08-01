@@ -8,14 +8,8 @@ namespace RestWithAspNETUdemy.Repository.Implementations
     {
         private MySQLContext _context;
 
-        public UserRepositoryImpl(MySQLContext context)
-        {
-            _context = context;
-        }
+        public UserRepositoryImpl(MySQLContext context) => _context = context;
 
-        public User FindByLogin(string login)
-        {
-            return _context.Users.SingleOrDefault(u => u.Login.Equals(login));
-        }
+        public User FindByLogin(string login) => _context.Users.SingleOrDefault(u => u.Login.Equals(login));
     }
 }

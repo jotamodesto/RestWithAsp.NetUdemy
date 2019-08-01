@@ -72,18 +72,17 @@ namespace RestWithAspNETUdemy.Business.Implementations
             return token;
         }
 
-        private object ExceptionObject()
-        {
-            return new
+        private object ExceptionObject() =>
+            new
             {
                 authenticated = false,
                 message = "Fail to authenticate"
             };
-        }
 
-        private object SuccessObject(DateTime createDate, DateTime expirationDate, string token)
-        {
-            return new
+
+
+        private object SuccessObject(DateTime createDate, DateTime expirationDate, string token) =>
+            new
             {
                 authenticated = true,
                 created = createDate.ToString("yyyy-MM-dd HH:mm:ss"),
@@ -91,6 +90,5 @@ namespace RestWithAspNETUdemy.Business.Implementations
                 accessToken = token,
                 message = "OK"
             };
-        }
     }
 }

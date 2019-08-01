@@ -16,10 +16,7 @@ namespace RestWithAspNETUdemy.Controllers
     {
         private IFileBusiness _fileBusiness;
 
-        public FileController(IFileBusiness fileBusiness)
-        {
-            _fileBusiness = fileBusiness;
-        }
+        public FileController(IFileBusiness fileBusiness) => _fileBusiness = fileBusiness;
 
         // GET: api/values
         [HttpGet]

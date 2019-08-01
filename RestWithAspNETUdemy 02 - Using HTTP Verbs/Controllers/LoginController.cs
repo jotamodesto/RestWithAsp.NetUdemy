@@ -11,10 +11,7 @@ namespace RestWithAspNETUdemy.Controllers
     public class LoginController : ControllerBase
     {
         private ILoginBusiness _loginBusiness;
-        public LoginController(ILoginBusiness loginBusiness)
-        {
-            _loginBusiness = loginBusiness;
-        }
+        public LoginController(ILoginBusiness loginBusiness) => _loginBusiness = loginBusiness;
 
         [HttpPost]
         [AllowAnonymous]

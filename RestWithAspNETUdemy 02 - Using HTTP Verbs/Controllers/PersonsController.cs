@@ -15,11 +15,7 @@ namespace RestWithAspNETUdemy.Controllers
     {
         private IPersonBusiness _personBusiness;
 
-        public PersonsController(IPersonBusiness personBusiness)
-        {
-            _personBusiness = personBusiness;
-        }
-
+        public PersonsController(IPersonBusiness personBusiness) => _personBusiness = personBusiness;
 
         // GET api/values
         [HttpGet]
@@ -63,10 +59,8 @@ namespace RestWithAspNETUdemy.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
-        public IActionResult GetPagedSearch([FromQuery] string name, string sortDirection, int pageSize, int page)
-        {
-            return new OkObjectResult(_personBusiness.PagedSearch(name, sortDirection, pageSize, page));
-        }
+        public IActionResult GetPagedSearch([FromQuery] string name, string sortDirection, int pageSize, int page) =>
+            new OkObjectResult(_personBusiness.PagedSearch(name, sortDirection, pageSize, page));
 
         // POST api/values
         [HttpPost]

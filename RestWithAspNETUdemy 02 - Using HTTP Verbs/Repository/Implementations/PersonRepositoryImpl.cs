@@ -10,9 +10,7 @@ namespace RestWithAspNETUdemy.Repository.Implementations
     {
         public PersonRepositoryImpl(MySQLContext context) : base(context) { }
 
-        public List<Person> FindByName(string firstName, string lastName)
-        {
-            return _context.Persons.Where(p => p.FirstName.Contains(firstName) || p.LastName.Contains(lastName)).ToList();
-        }
+        public List<Person> FindByName(string firstName, string lastName) =>
+            _context.Persons.Where(p => p.FirstName.Contains(firstName) || p.LastName.Contains(lastName)).ToList();
     }
 }

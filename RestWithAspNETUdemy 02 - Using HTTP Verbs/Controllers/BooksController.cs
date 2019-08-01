@@ -11,10 +11,7 @@ namespace RestWithAspNETUdemy.Controllers
     public class BooksController : ControllerBase
     {
         private IBookBusiness _bookBusiness;
-        public BooksController(IBookBusiness bookBusiness)
-        {
-            _bookBusiness = bookBusiness;
-        }
+        public BooksController(IBookBusiness bookBusiness) => _bookBusiness = bookBusiness;
 
         [HttpGet]
         [ProducesResponseType(typeof(List<BookVO>), 200)]
